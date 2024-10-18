@@ -1,0 +1,241 @@
+-- Script GUI Lengkap
+local player = game.Players.LocalPlayer
+local screenGui = Instance.new("ScreenGui")
+local frame = Instance.new("Frame")
+
+-- Mengatur frame
+frame.Size = UDim2.new(0.5, 0, 0.5, 0)
+frame.Position = UDim2.new(0.25, 0, 0.25, 0)
+frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+frame.Parent = screenGui
+
+-- Label Judul
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Size = UDim2.new(1, 0, 0.1, 0)
+titleLabel.Text = "My Custom GUI"
+titleLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
+titleLabel.Parent = frame
+
+-- Tombol
+local button1 = Instance.new("TextButton")
+button1.Size = UDim2.new(0.4, 0, 0.1, 0)
+button1.Position = UDim2.new(0.1, 0, 0.2, 0)
+button1.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+button1.Text = "Action 1"
+button1.Parent = frame
+
+local button2 = Instance.new("TextButton")
+button2.Size = UDim2.new(0.4, 0, 0.1, 0)
+button2.Position = UDim2.new(0.1, 0, 0.35, 0)
+button2.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+button2.Text = "Action 2"
+button2.Parent = frame
+
+local button3 = Instance.new("TextButton")
+button3.Size = UDim2.new(0.4, 0, 0.1, 0)
+button3.Position = UDim2.new(0.1, 0, 0.5, 0)
+button3.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+button3.Text = "Action 3"
+button3.Parent = frame
+
+-- Dropdown Menu
+local dropdownFrame = Instance.new("Frame")
+dropdownFrame.Size = UDim2.new(0.4, 0, 0.2, 0)
+dropdownFrame.Position = UDim2.new(0.3, 0, 0.4, 0)
+dropdownFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+dropdownFrame.Parent = frame
+
+local dropdownLabel = Instance.new("TextLabel")
+dropdownLabel.Size = UDim2.new(1, 0, 0.5, 0)
+dropdownLabel.Text = "Select an Option"
+dropdownLabel.Parent = dropdownFrame
+
+local options = {"Option 1", "Option 2", "Option 3"}
+local selectedOption = Instance.new("TextButton")
+selectedOption.Size = UDim2.new(1, 0, 0.5, 0)
+selectedOption.Text = options[1] -- Default to the first option
+selectedOption.Parent = dropdownFrame
+
+selectedOption.MouseButton1Click:Connect(function()
+    -- Menampilkan menu dropdown
+    for i, option in ipairs(options) do
+        local optionButton = Instance.new("TextButton")
+        optionButton.Size = UDim2.new(1, 0, 0.5, 0)
+        optionButton.Position = UDim2.new(0, 0, i * 0.5, 0)
+        optionButton.Text = option
+        optionButton.Parent = dropdownFrame
+
+        optionButton.MouseButton1Click:Connect(function()
+            selectedOption.Text = option -- Update teks dropdown
+            for _, child in ipairs(dropdownFrame:GetChildren()) do
+                if child:IsA("TextButton") and child ~= selectedOption then
+                    child:Destroy() -- Hapus opsi lain
+                end
+            end
+        end)
+    end
+end)
+
+-- Checkbox
+local checkboxFrame = Instance.new("Frame")
+checkboxFrame.Size = UDim2.new(0.4, 0, 0.1, 0)
+checkboxFrame.Position = UDim2.new(0.3, 0, 0.65, 0)
+checkboxFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+checkboxFrame.Parent = frame
+
+local checkboxLabel = Instance.new("TextLabel")
+checkboxLabel.Size = UDim2.new(0.8, 0, 1, 0)
+checkboxLabel.Text = "Enable Feature X"
+checkboxLabel.Parent = checkboxFrame
+
+local checkboxButton = Instance.new("TextButton")
+checkboxButton.Size = UDim2.new(0.2, 0, 0.8, 0)
+checkboxButton.Position = UDim2.new(0.8, 0, 0.1, 0)
+checkboxButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0) -- Merah (tidak aktif)
+checkboxButton.Text = "Off"
+checkboxButton.Parent = checkboxFrame
+
+local isCheckboxChecked = false
+checkboxButton.MouseButton1Click:Connect(function()
+    isCheckboxChecked = not isCheckboxChecked
+    if isCheckboxChecked then
+        checkboxButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0) -- Hijau (aktif)
+        checkboxButton.Text = "On"
+    else
+        checkboxButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0) -- Merah (tidak aktif)
+        checkboxButton.Text = "Off"
+    end
+end)
+
+-- Toggle Button
+local toggleButtonFrame = Instance.new("Frame")
+toggleButtonFrame.Size = UDim2.new(0.4, 0, 0.1, 0)
+toggleButtonFrame.Position = UDim2.new(0.3, 0, 0.75, 0)
+toggleButtonFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+toggleButtonFrame.Parent = frame
+
+local toggleLabel = Instance.new("TextLabel")
+toggleLabel.Size = UDim2.new(0.8, 0, 1, 0)
+toggleLabel.Text = "Toggle Feature Y"
+toggleLabel.Parent = toggleButtonFrame
+
+local toggleButton = Instance.new("TextButton")
+toggleButton.Size = UDim2.new(0.2, 0, 0.8, 0)
+toggleButton.Position = UDim2.new(0.8, 0, 0.1, 0)
+toggleButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0) -- Merah (tidak aktif)
+toggleButton.Text = "Off"
+toggleButton.Parent = toggleButtonFrame
+
+local isToggleOn = false
+toggleButton.MouseButton1Click:Connect(function()
+    isToggleOn = not isToggleOn
+    if isToggleOn then
+        toggleButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0) -- Hijau (aktif)
+        toggleButton.Text = "On"
+    else
+        toggleButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0) -- Merah (tidak aktif)
+        toggleButton.Text = "Off"
+    end
+end)
+
+-- Volume Slider
+local volumeFrame = Instance.new("Frame")
+volumeFrame.Size = UDim2.new(0.4, 0, 0.2, 0)
+volumeFrame.Position = UDim2.new(0.3, 0, 0.85, 0)
+volumeFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+volumeFrame.Parent = frame
+
+local volumeLabel = Instance.new("TextLabel")
+volumeLabel.Size = UDim2.new(1, 0, 0.5, 0)
+volumeLabel.Text = "Volume: 50"
+volumeLabel.Parent = volumeFrame
+
+local volumeSlider = Instance.new("TextButton")
+volumeSlider.Size = UDim2.new(1, 0, 0.5, 0)
+volumeSlider.Position = UDim2.new(0, 0, 0.5, 0)
+volumeSlider.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
+volumeSlider.Text = ""
+volumeSlider.Parent = volumeFrame
+
+local function onVolumeSliderClick(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        local mousePosition = input.Position.X - volumeSlider.AbsolutePosition.X
+        local percentage = math.clamp(mousePosition / volumeFrame.AbsoluteSize.X, 0, 1)
+        local volumeValue = math.floor(percentage * 100)
+        volumeLabel.Text = "Volume: " .. volumeValue
+        -- Update volume setting or functionality here
+    end
+end
+
+volumeSlider.MouseButton1Down:Connect(onVolumeSliderClick)
+
+-- Mengintegrasikan semua elemen ke dalam GUI
+local function setupGui()
+    -- Memanggil fungsi sebelumnya untuk membuat semua elemen GUI
+    screenGui.Parent = player:WaitForChild("PlayerGui")
+    frame.Parent = screenGui
+    titleLabel.Parent = frame
+    button1.Parent = frame
+    button2.Parent = frame
+    button3.Parent = frame
+    dropdownFrame.Parent = frame -- Menambahkan dropdown
+    checkboxFrame.Parent = frame -- Menambahkan checkbox
+    toggleButtonFrame.Parent = frame -- Menambahkan toggle button
+    volumeFrame.Parent = frame -- Menambahkan volume slider
+    infoLabel.Parent = frame -- Menambahkan label informasi
+
+    -- Menambahkan event untuk tombol
+    button1.MouseButton1Click:Connect(function()
+        print("Action 1 executed!")
+        updateInfoLabel("Action 1 executed!")
+    end)
+    
+    button2.MouseButton1Click:Connect(function()
+        print("Action 2 executed!")
+        updateInfoLabel("Action 2 executed!")
+    end)
+    
+    button3.MouseButton1Click:Connect(function()
+        print("Action 3 executed!")
+        updateInfoLabel("Action 3 executed!")
+    end)
+
+    -- Event untuk dropdown menu
+    selectedOption.MouseButton1Click:Connect(function()
+        updateInfoLabel("Dropdown menu opened.")
+    end)
+
+    -- Event untuk checkbox
+    checkboxButton.MouseButton1Click:Connect(function()
+        updateInfoLabel("Checkbox toggled.")
+    end)
+
+    -- Event untuk toggle button
+    toggleButton.MouseButton1Click:Connect(function()
+        updateInfoLabel("Toggle button changed.")
+    end)
+
+    -- Event untuk volume slider
+    volumeSlider.MouseButton1Down:Connect(function(input)
+        onVolumeSliderClick(input)
+        updateInfoLabel("Volume adjusted.")
+    end)
+end
+
+setupGui()
+
+-- Label untuk menampilkan informasi
+local infoLabel = Instance.new("TextLabel")
+infoLabel.Size = UDim2.new(1, 0, 0.1, 0)
+infoLabel.Position = UDim2.new(0, 0, 0.95, 0)
+infoLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+infoLabel.Text = "Information will appear here."
+infoLabel.Parent = frame
+
+-- Fungsi untuk memperbarui label informasi
+local function updateInfoLabel(message)
+    infoLabel.Text = message
+end
+
+-- Memanggil fungsi untuk menyiapkan GUI
+setupGui()
